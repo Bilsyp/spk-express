@@ -36,4 +36,15 @@ app.use("/api/kuisioner", kuisionerRoutes);
 app.use("/api/electre", electreRoutes);
 app.use("/api/nilai_alternatif", nilaiAlternatifRoutes);
 
+// Middleware 404 untuk rute yang tidak ditemukan
+app.use((req, res) => res.status(404).json({ message: "Not Found" }));
+
+// Middleware error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res
+    .status(err.status || 500)
+    .json({ message: err.message || "Internal Server Error" });
+});
+
 app.listen(3000, () => console.log("Server running on http://localhost:3000"));
